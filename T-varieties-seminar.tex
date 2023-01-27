@@ -1,6 +1,6 @@
 \documentclass[a4paper]{article}
 
-\title{Summary of 'What is a Toric Variety' by David Cox}
+\title{Summary of the T-varieties seminar}
 \author{Leandro Meier}
 \date{}
 
@@ -17,6 +17,9 @@
 \usepackage{comment}
 \usepackage{bm}
 
+\DeclareMathOperator{\TV}{TV}
+\DeclareMathOperator{\tail}{tail}
+
 \setlength\parindent{0pt}
 
 \newtheorem{theorem}{Theorem}[section]
@@ -29,7 +32,8 @@
 \begin{document}
 \maketitle
 \tableofcontents
-
+\section{Toric Varieties}
+\subsection{Affine Toric Varieties}
 \begin{definition}
   A \emph{toric variety} is an irreducible variety (in this, usually affine or projective) $V$ such that 
   \begin{enumerate}[(i)]
@@ -60,11 +64,11 @@
   
 
   \begin{definition}
-    For a cone (strongly convex, rational, polyhedral) $\sigma$, define its dual cone as 
+    For a cone (strongly convex, rational, polyhedral) $\sigma \subseteq \mathbb{N}_{\mathbb{R}}$, define its dual cone 
     \[
-      \sigma ^{ \vee}\left\{ \boldsymbol{m} \in \mathbb{R}^{n}\mid \left\langle \boldsymbol{m} ,\boldsymbol{u}  \right\rangle\geq 0 \text{ for all } \boldsymbol{ u } \in \sigma\right\}.
+      \sigma ^{ \vee} = \left\{ \boldsymbol{m} \in M_{\mathbb{R}}\mid \left\langle \boldsymbol{m} ,\boldsymbol{u}  \right\rangle\geq 0 \text{ for all } \boldsymbol{ u } \in \sigma\right\}.
     \]
-    Here $\left\langle \cdot, \cdot \right\rangle$ is the usual scalar product on $\mathbb{R}^{n}$.
+    Here $\left\langle \cdot, \cdot \right\rangle$ denotes the natural pairing between $N$ and its dual lattice $M$. In the case of $N \cong M \cong \mathbb{Z}^{n}$, this is just the usual scalar product. 
   \end{definition}
 
   Using the dual cone $\sigma^{\vee}$, we can construct a variety $U_{\sigma}$ as follows. Consider the lattice points of $\sigma^{\vee}$: $\sigma^{\vee} \cap \mathbb{Z}^{n}$. The lattice points are finitely generated (Gordan's Lemma). Let $\boldsymbol{m} _{1}, \dots, \boldsymbol{m} _{l}$ be generators, and consider the map 
@@ -79,6 +83,9 @@
     The Zariski closure of the image of the map $\varphi $ from above is the normal afine toric variety $U_{\sigma}$ determined by $\sigma $ and $\mathbb{Z}^{n}$ if and only if $\sigma^{\vee} \cap \mathbb{Z}^{n}$ is generated over $\mathbb{Z}_{\geq 0}$ by $\boldsymbol{m} _{1}, \dots, \boldsymbol{m} _{l}$.
   \end{theorem}
 
+  Alternative construction of $U_{\sigma}$: the Spectrum of the semigroup algebra $\mathbb{C} \left[ \sigma^{\vee} \cap M \right]$. We also refer to the affine toric variety thus obtained by $V_{\sigma}$.
+
+  \subsection{The Toric Variety of a Fan}
   \begin{definition}
     A \emph{fan} is a finite collection $\Sigma$ of cones in $\mathbb{R}^{n}$ such that :
     \begin{itemize}
@@ -86,9 +93,45 @@
       \item If $\sigma \in \Sigma$ and $\tau$ is a face of $\sigma$, then $\tau \in \Sigma$.
       \item If $\sigma, \tau \in \Sigma$, then $\sigma \cap \tau$ is a face of each cone.
     \end{itemize}
-    
   \end{definition}
+  Let $\sigma$, $\tau$ be cones in a fan $\Sigma$ and $\tau$ a face og $\sigma$. This implies that $\sigma ^{\vee}  \subseteq \tau ^{\vee} $ and thus also $\mathbb{C} \left[ s_{\sigma} \right] \subseteq \mathbb{C} \left[ S_{\tau} \right]$, hence we get an embedding of $V_{\tau}$ as an open subset of $V_{\sigma}$. More precisely, $V_{\tau}$ is naturally isomorphic to the open subset defined by $\chi^{m}$inside $V_{\sigma}$, since $\mathbb{C} \left[ S_{\tau} \right] = \mathbb{C} \left[ S_{\sigma} \right]_{\chi^{m}}$, where $m \in M$ is such that $H_{m} \cap \sigma = \tau$.\\
+  The fact that any two cones in $\Sigma$ intersect in a common face yields immmersions
+  \begin{align*}
+    V_{\sigma}\cap V_{\sigma'} \rightarrow  V_{\sigma}  & \text{ and } V_{\sigma}\cap V_{\sigma'} \rightarrow  V_{\sigma'}.
+  \end{align*}
+  Denoting the images of these immersions by $V_{\sigma \sigma'}$ and $V_{\sigma' \sigma}$, respectively, there are isomorphisms between them. Now we have all the data we need to glue an abstract variety, according to the next definition.
+  \begin{definition}
+    Given  a fan $\Sigma$ in $N_{\mathbb{R}}$, $X_{\Sigma}$ is the abstract toric variety constructed using the gluing data $\left\{ \left\{V_{\sigma}\right\}_{\sigma \in \Sigma}, \left\{V_{\sigma \sigma'}\right\}_{\sigma, \sigma' \in \Sigma}, \left\{g_{\sigma \sigma'}\right\}_{\sigma, \sigma' \in \Sigma}\right\}$.
+  \end{definition}
+  \begin{theorem}
+    The construction above yields a is a normal separated toric variety $X_{\Sigma}$.
+  \end{theorem}
+  In fact, the torus $T \left( N \right) = N \otimes_{\mathbb{Z}} C^{*} \cong \left( C^{*} \right)^{n}$ is the open subset obtained from the cone $\left\{ 0\right\}$.
+  \begin{definition}
+    A variety $Y$ is called
+    \begin{itemize}
+      \item \emph{normal}, if each local ring $\mathcal{O} _{Y,p}$ is normal, i.e. integrally closed in its field of fractions. (should we assume $Y$ irreducible here? yes, but toric varieties are irreducible)
+      \item \emph{separated}, if the diagonal map $\Delta \colon Y \rightarrow  Y \times Y$ is closed. (With respect to which topology on $Y \times Y$?)
+    \end{itemize}
+  \end{definition}
+
+  Some examples like $\mathbb{P}^{2}$, to be added.\\
+
+  %TODO: add orbit-cone-limit correspondence and finite quotient singularities
   
+  
+  \pagebreak
+  \section{Divisors}
+
+  \section{Affine T-varieties}
+  We use different notation for the concepts known from the very first part: $M$, $ N$ are still mutually dual lattices. A cone in $N_{\mathbb{Q}}$ spanned by elements $a_{1}, \dots, a_{m}$ is now denoted by $\sigma = \left\langle a_{1}, \dots, a_{m} \right\rangle$ and $\sigma ^{\vee}  $ lives inside $M_{\mathbb{Q}}$. We assume that the $a_{i}$ are primitive elements of $N_{\mathbb{Q}}$, and we denote the affine troic variety obtained from $\sigma$ by $\TV \left( \sigma \right)$.
+
+  \subsection{Toric Bouquets}
+  Let $\Delta$ be a polyhedron, i.e. a finite intersection of hyperplanes, in $N_{\mathbb{Q}}$. We define its \emph{tail cone} 
+  \[
+    \tail \left( \Delta \right) = \left\{a \in N_{\mathbb{Q}} \mid a + \Delta \subseteq \Delta\right\}.
+  \]
+  Assume now that $\Delta$ is pointed, (i.e. strongly convex), then we can write it as the Minkowski sum  $\Delta = \Delta ^{c} + \tail \left( \Delta \right)$, where $\Delta ^{c}$ denotes the convex hull of the vetices of $\Delta$, which in this case exist.
   
   
   
