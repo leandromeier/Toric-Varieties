@@ -8,6 +8,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{mathtools}
 
 \usepackage{enumerate}
 \usepackage{booktabs}
@@ -19,6 +20,10 @@
 
 \DeclareMathOperator{\TV}{TV}
 \DeclareMathOperator{\tail}{tail}
+\DeclareMathOperator{\Specc}{Spec}
+\DeclareMathOperator{\Pol}{Pol}
+\DeclareMathOperator{\CaDiv}{CaDiv}
+\DeclareMathOperator{\Loc}{Loc}
 
 \setlength\parindent{0pt}
 
@@ -110,7 +115,7 @@
   \begin{definition}
     A variety $Y$ is called
     \begin{itemize}
-      \item \emph{normal}, if each local ring $\mathcal{O} _{Y,p}$ is normal, i.e. integrally closed in its field of fractions. (should we assume $Y$ irreducible here? yes, but toric varieties are irreducible)
+      \item \emph{normal}, if each local ring $\mathcal{O} _{Y,p}$ is normal, i.e.~integrally closed in its field of fractions. (should we assume $Y$ irreducible here? yes, but toric varieties are irreducible)
       \item \emph{separated}, if the diagonal map $\Delta \colon Y \rightarrow  Y \times Y$ is closed. (With respect to which topology on $Y \times Y$?)
     \end{itemize}
   \end{definition}
@@ -127,11 +132,68 @@
   We use different notation for the concepts known from the very first part: $M$, $ N$ are still mutually dual lattices. A cone in $N_{\mathbb{Q}}$ spanned by elements $a_{1}, \dots, a_{m}$ is now denoted by $\sigma = \left\langle a_{1}, \dots, a_{m} \right\rangle$ and $\sigma ^{\vee}  $ lives inside $M_{\mathbb{Q}}$. We assume that the $a_{i}$ are primitive elements of $N_{\mathbb{Q}}$, and we denote the affine troic variety obtained from $\sigma$ by $\TV \left( \sigma \right)$.
 
   \subsection{Toric Bouquets}
-  Let $\Delta$ be a polyhedron, i.e. a finite intersection of hyperplanes, in $N_{\mathbb{Q}}$. We define its \emph{tail cone} 
+  Let $\Delta$ be a polyhedron, i.e.~a finite intersection of hyperplanes, in $N_{\mathbb{Q}}$. We define its \emph{tail cone} 
   \[
     \tail \left( \Delta \right) = \left\{a \in N_{\mathbb{Q}} \mid a + \Delta \subseteq \Delta\right\}.
   \]
-  Assume now that $\Delta$ is pointed, (i.e. strongly convex), then we can write it as the Minkowski sum  $\Delta = \Delta ^{c} + \tail \left( \Delta \right)$, where $\Delta ^{c}$ denotes the convex hull of the vetices of $\Delta$, which in this case exist.
+  Assume now that $\Delta$ is pointed, (i.e.~strongly convex), then we can write it as the Minkowski sum  $\Delta = \Delta ^{c} + \tail \left( \Delta \right)$, where $\Delta ^{c}$ denotes the convex hull of the vetices of $\Delta$, which is a non-empty set since $\Delta $ is pointed.\\
+  For a polyhedron $\Delta$, we define its \emph{inner normal fan} $\mathcal{N} \left( \Delta \right)$. Its cones correspond 1:1 to the faces of $\Delta$ via the map
+  \begin{align*}
+    F \mapsto &= \mathcal{N} \left( F, \Delta \right) \\
+              &= \left\{u \in M_{\mathbb{Q}} \mid \left\langle F, u \right\rangle = \min \left\langle \Delta, u \right\rangle\right\}.
+  \end{align*}
+  We associate to $\mathcal{N} \left( \Delta \right)$ a $\mathbb{C}$-algebra $\mathbb{C} \left[ \mathcal{N} \left( \Delta \right) \cap M \right]$: as a vector space, it is isomorphic to $\mathbb{C} \left[ \tail \left( \Delta \right)^{\vee}  \cap M \right]$, and multiplication is given by
+  \[
+    \chi^{u} \cdot \chi^{u'} = 
+    \begin{dcases*}
+      \chi^{u + u'} & if $u$ and $u'$ are in the same cone\\
+      0 & otherwise.
+    \end{dcases*}
+  \]
+  \begin{definition}
+    A \emph{toric bouquet} is a variety of the form
+    \[
+      \TV \left( \Delta \right) = \Specc \left( \mathbb{C} \left[ \mathcal{N} \left( \Delta \right) \cap M \right] \right),
+    \]
+   corresponding to some $\Delta$.
+  \end{definition}
+  $\TV \left( \Delta \right)$ decomposes into irreducible toric components:
+  \[
+    \TV \left( \Delta \right) = \bigcup_{v \in \mathcal{N} \left( \Delta \right) }^{} \TV \left( \mathbb{Q}_{\geq 0} \cdot \left( \Delta - v \right) \right).
+  \]
+
+  \subsection{Polyhedral Divisors}
+  For a cone $\sigma$, we define the subset of polyhedra
+  \[
+    \Pol_{\mathbb{Q}}^{+}\left( N, \sigma \right) := \left\{ \Delta \subseteq N_{\mathbb{Q}} \mid \tail \left( \Delta \right) = \sigma\left(  \right)\right\}.
+  \]
+  With Minkowski sums $\Pol_{\mathbb{Q}}^{+}\left( N, \sigma\right) $ gets the strucutre of a semigroup, where $\sigma$ is the neutral element, and the empty set is the worst element, in a sense, since $\emptyset+ \Delta = \emptyset$.\\
+  Moreover, $a + b = a + c \Rightarrow  b = c$ holds true in $\Pol_{\mathbb{Q}}^{+}\left( N, \sigma\right) $.
+  Let $Y$ be a projective variety and $\CaDiv$ its Cartier divisors. A \emph{polyhedral divisor} is something of the form 
+   \[
+     \mathcal{ D}  = \sum_{Z } D_{Z} \otimes Z \in \Pol_{\mathbb{Q}}^{+}\left( N, \sigma\right)  \otimes_{\mathbb{Z}_{\geq 0}} \CaDiv \left( Y \right),
+   \]
+   where only finitely many of the $D_{Z}$ are nontrivial, i.e.~$\ne \sigma$.\\
+   The tail of this divisor is defined as $\sigma$.\\
+   We are intersetd in the following set:
+   \[
+     \Loc \left( \mathcal{ D}  \right) = Y  \setminus \bigcup_{D_{Z} \ne \emptyset} Z .
+   \]
+   For $u \in \tail \left( \mathcal{D}  \right) ^{\vee} $, we define the \emph{evaluation} 
+   \[
+     \mathcal{ D} \left( u \right)  = \sum_{D_{Z} \ne \emptyset } \min \left\langle  D_{Z} ,u\right\rangle \cdot Z_{\mid \Loc \left( \mathcal{D}  \right)} \in \CaDiv \left( \Loc \left( \mathcal{D}  \right) \right).
+   \]
+   Note that the tensor product in this case simplifies to scalar multiplication.
+   
+   
+   
+  
+
+  
+  
+  
+  
+  
   
   
   
